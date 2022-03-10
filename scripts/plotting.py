@@ -11,6 +11,8 @@ import constant as c
 from parsing import FileParser
 from utils import *
 
+plt.style.use('plot_style.txt')
+
 
 class FigurePlotter:
     """
@@ -46,7 +48,9 @@ class FigurePlotter:
                 'size': 14}
         matplotlib.rc('font', **font)
 
-        plt.figure(figsize=(12, 5), dpi=500, constrained_layout=True)
+        # plt.figure(figsize=(12, 5), dpi=500, constrained_layout=True)
+        plt.close('all')
+        plt.figure()
         variation_data = {}
 
         for i in range(iters):
@@ -80,13 +84,16 @@ class FigurePlotter:
         variations = []
         for i, (v, d) in enumerate(sorted(variation_data.items(), key=lambda item: eval(item[0]))):
             data.append(d)
-            variations.append(v)
+            variations.append(eval(v)[0])
 
-        plt.boxplot(data)
-        plt.xlabel(var)
-        plt.title(title)
+        plt.violinplot(data)
+        plt.xlabel('Adversary Mana (%)')
+        # plt.title(title)
         plt.xticks(ticks=list(range(1, 1 + len(variations))),
                    labels=variations)
+
+        # axes = plt.axes()
+        # axes.set_ylim([0, 60])
         if target == 'convergence_time':
             plt.ylabel('Convergence Time (s)')
         elif target == 'flips':
@@ -344,7 +351,7 @@ class FigurePlotter:
 
         rc, cc = get_row_col_counts(fc)
         fig, axs = plt.subplots(rc, cc, figsize=(
-            12, 5), dpi=500, constrained_layout=True)
+            12, 5), dpi=500, constrained_layout=False)
 
         for i, (v, tp) in enumerate(sorted(variation_data.items(), key=lambda item: eval(item[0]))):
             (tips, processed, issued, x_axis) = tp
@@ -390,7 +397,9 @@ class FigurePlotter:
                 'size': 14}
         matplotlib.rc('font', **font)
 
-        plt.figure(figsize=(12, 5), dpi=500, constrained_layout=True)
+        # plt.figure(figsize=(12, 5), dpi=500, constrained_layout=True)
+        plt.close('all')
+        plt.figure()
         variation_data = {}
         for f in glob.glob(fs):
             try:
@@ -406,13 +415,19 @@ class FigurePlotter:
             ct_series = np.array(sorted(d[0].values))
             confirmed_msg_counts = np.array(list(d[0].index))
             plt.plot(ct_series / d[1], 100.0 * confirmed_msg_counts / len(confirmed_msg_counts),
-                     label=f'{label} = {v}', color=clr, ls=sty)
+                     label=f'$\it{label}$ = {v}', color=clr, ls=sty)
 
         plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
+        axes = plt.axes()
+        axes.set_ylim([0, 100])
+        axes.set_xlim([0, 5])
         plt.xlabel('Confirmation Time (s)')
         plt.ylabel('Cumulative Confirmed Message Percentage')
-        plt.legend()
-        plt.title(title)
+        # plt.legend()
+        plt.legend(frameon=False, loc='lower right', ncol=1, handlelength=4)
+        # plt.title(title)
+        # plt.savefig(f'{self.figure_output_path}/{ofn}',
+        #             transparent=self.transparent)
         plt.savefig(f'{self.figure_output_path}/{ofn}',
-                    transparent=self.transparent)
+                    transparent=self.transparent, dpi=300)
         plt.close()
