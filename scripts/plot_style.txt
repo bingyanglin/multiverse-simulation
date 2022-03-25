@@ -26,7 +26,6 @@ legend.borderpad: 0.2
 legend.columnspacing: 1.5
 legend.labelspacing:  0.4
 text.usetex: False
-axes.titlelocation: left
 axes.formatter.use_mathtext: True
 axes.autolimit_mode: round_numbers
 axes.labelpad: 3

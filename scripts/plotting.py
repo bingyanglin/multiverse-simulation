@@ -65,7 +65,9 @@ class FigurePlotter:
                 except:
                     logging.error(f'{fs}: Incomplete Data!')
                     continue
-
+                # v = eval(v)
+                # v = [int(x) for x in v]
+                # v = sum(v)
                 if target == 'convergence_time':
                     # Store the convergence time
                     if v not in variation_data:
@@ -82,19 +84,22 @@ class FigurePlotter:
 
         data = []
         variations = []
-        for i, (v, d) in enumerate(sorted(variation_data.items(), key=lambda item: eval(item[0]))):
+        # for i, (v, d) in enumerate(sorted(variation_data.items(), key=lambda item: eval(item[0]))):
+        for i, (v, d) in enumerate(sorted(variation_data.items())):
             d = [d_i if d_i < 60 else 60 for d_i in d]
             data.append(d)
-            variations.append(eval(v)[0])
+            # variations.append(eval(v)[0])
+            variations.append(v)
 
         plt.violinplot(data)
-        plt.xlabel('Adversary Mana (%)')
+        plt.xlabel('Node Count')
         # plt.title(title)
         plt.xticks(ticks=list(range(1, 1 + len(variations))),
                    labels=variations)
 
         axes = plt.axes()
-        axes.set_ylim([0, 60])
+        # axes.set_ylim([0, 2])
+        # plt.yticks(np.arange(0, 2.1, 0.5))
         if target == 'convergence_time':
             plt.ylabel('Convergence Time (s)')
         elif target == 'flips':
@@ -421,7 +426,8 @@ class FigurePlotter:
         plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
         axes = plt.axes()
         axes.set_ylim([0, 100])
-        axes.set_xlim([0, 5])
+        axes.set_xlim([0, 2])
+        plt.xticks(np.arange(0, 2.1, 0.5))
         plt.xlabel('Confirmation Time (s)')
         plt.ylabel('Cumulative Confirmed Message Percentage')
         # plt.legend()
