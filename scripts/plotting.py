@@ -92,14 +92,17 @@ class FigurePlotter:
             variations.append(v)
 
         plt.violinplot(data)
-        plt.xlabel('Node Count')
+        plt.xlabel('Adversary Mana of Each Pair (%)')
         # plt.title(title)
+        variations = [[15.6, 15.6], [0.25, 15.6], [0.25, 0.25]]
         plt.xticks(ticks=list(range(1, 1 + len(variations))),
                    labels=variations)
-
+        # max:   15560059,    246609
+        # total 100000000  100000000
+        # 15.6 0.25
         axes = plt.axes()
-        # axes.set_ylim([0, 2])
-        # plt.yticks(np.arange(0, 2.1, 0.5))
+        axes.set_ylim([0, 2])
+        plt.yticks(np.arange(0, 2.1, 0.5))
         if target == 'convergence_time':
             plt.ylabel('Convergence Time (s)')
         elif target == 'flips':
@@ -415,6 +418,10 @@ class FigurePlotter:
                 continue
             variation_data[v] = (data, x_axis_adjust)
         for i, (v, d) in enumerate(sorted(variation_data.items(), key=lambda item: eval(item[0]))):
+
+            # if eval(v) not in [0, 0.6, 1, 1.2, 1.6, 2]:
+            #     continue
+            # print(v)
             clr = self.clr_list[i // 4]
             sty = self.sty_list[i % 4]
 
