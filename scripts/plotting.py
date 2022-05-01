@@ -432,3 +432,60 @@ class FigurePlotter:
         plt.savefig(f'{self.figure_output_path}/{ofn}',
                     transparent=self.transparent, dpi=300)
         plt.close()
+
+    def bar_plot(self):
+
+        # Init the matplotlib config
+        font = {'family': 'Times New Roman',
+                'weight': 'bold',
+                'size': 14}
+        matplotlib.rc('font', **font)
+
+        # plt.figure(figsize=(12, 5), dpi=500, constrained_layout=True)
+        plt.close('all')
+        plt.figure()
+
+        y = [6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 33.0]
+        z = [20.800073,
+             11.146481,
+             7.738479,
+             5.973251,
+             4.886431,
+             4.146948,
+             3.609745,
+             3.200986,
+             2.879032,
+             2.618573,
+             33.000000]
+        k = [43.232292,
+             10.808071,
+             4.803587,
+             2.702017,
+             1.729290,
+             1.200896,
+             0.882290,
+             0.675503,
+             0.533731,
+             0.432322,
+             33.000000]
+        x = np.array(range(1, 12))
+
+        plt.bar(x-0.2, y, width=0.2, color='b',
+                align='center', label='$\its$ = 0')
+        plt.bar(x, z, width=0.2, color='g',
+                align='center', label='$\its$ = 0.9')
+        plt.bar(x+0.2, k, width=0.2, color='r',
+                align='center', label='$\its$ = 2')
+
+        plt.xticks(ticks=list(range(1, 12)),
+                   labels=x)
+        plt.xlabel('Node Index')
+        plt.ylabel('Node Weight (%)')
+        plt.legend()
+        plt.legend(frameon=True, loc='upper center', ncol=1, handlelength=1)
+        # plt.title(title)
+        # plt.savefig(f'{self.figure_output_path}/{ofn}',
+        #             transparent=self.transparent)
+        plt.savefig('bar_plot.pdf')
+        # plt.show()
+        plt.close()
