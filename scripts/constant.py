@@ -29,7 +29,8 @@ DS_STY_LIST = ['-', '-', '--', '--', "-.", "-."]
 # The simulation mapping
 SIMULATION_VAR_DICT = {'N': 'nodesCount',
                        'S': 'zipfParameter',
-                       'K': 'tipsCount'}
+                       'K': 'tipsCount',
+                       'AD': 'AdversaryMana'}
 
 # The figure naming mapping
 FIGURE_NAMING_DICT = {'N': ("NodesCount", "Confirmation Time v.s. Different Node Counts",
