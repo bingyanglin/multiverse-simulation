@@ -68,6 +68,14 @@ class FigurePlotter:
 
                 if target == 'convergence_time':
                     # Store the convergence time
+                    if v == '0.50-true':
+                        v = '0.5'
+                    elif v == '0.66-true':
+                        v = '0.66'
+                    elif v == '0.75-true':
+                        v = '0.75'
+                    else:
+                        continue
                     if v not in variation_data:
                         variation_data[v] = [ct]
                     else:
@@ -85,16 +93,17 @@ class FigurePlotter:
         for i, (v, d) in enumerate(sorted(variation_data.items(), key=lambda item: eval(item[0]))):
             d = [d_i if d_i < 60 else 60 for d_i in d]
             data.append(d)
-            variations.append(eval(v)[0])
+            # variations.append(eval(v)[0])
+            variations.append(eval(v))
 
         plt.violinplot(data)
-        plt.xlabel('Adversary Weight (%)')
+        plt.xlabel('Finality Threshold')
         # plt.title(title)
         plt.xticks(ticks=list(range(1, 1 + len(variations))),
                    labels=variations)
 
         axes = plt.axes()
-        axes.set_ylim([0, 20])
+        axes.set_ylim([0, 3])
         if target == 'convergence_time':
             plt.ylabel('Consensus Time (s)')
         elif target == 'flips':
