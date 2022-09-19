@@ -611,13 +611,14 @@ class FigurePlotter:
             #     ax.set_title(
             #         f'Uniform Random Delay = 50–950 (ms)', fontsize=12)
             # variations.append(f'{v}, {thorughput[i]}')
-            # variations.append(float(v)*100)
-            print(z, v)
-            variations.append(int(eval(v)[0]))
+            variations.append(float(v)*100)
+            # print(z, v)
+            # variations.append(int(eval(v)[0]))
 
         # print(data)
         plt.violinplot(data)
-        plt.xlabel('Adversary Weight (%)')
+        # plt.xlabel('Adversary Weight (%)')
+        plt.xlabel('Payload Loss (%)')
         # plt.xlabel('Uniform Random Network Delay (ms)')
         # plt.xlabel('Node Count, TPS')
         # plt.ylim(0, 6)
@@ -626,7 +627,7 @@ class FigurePlotter:
                    labels=variations)
 
         axes = plt.axes()
-        axes.set_ylim([0, 6])
+        axes.set_ylim([0, 60])
         plt.ylabel('Confirmation Time (s)')
         plt.savefig(f'{self.figure_output_path}/{ofn}',
                     transparent=self.transparent, dpi=300)
