@@ -97,7 +97,7 @@ class FigurePlotter:
             variations.append(eval(v))
 
         plt.violinplot(data)
-        plt.xlabel('Finality Threshold')
+        plt.xlabel('Confirmation Threshold')
         # plt.title(title)
         plt.xticks(ticks=list(range(1, 1 + len(variations))),
                    labels=variations)
