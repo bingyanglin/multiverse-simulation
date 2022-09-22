@@ -49,7 +49,7 @@ class FileParser:
         with open(config_fn) as f:
             c = json.load(f)
 
-        v = str(c[variation])
+        v = str(c[variation]).split('-')[0]
 
         data = pd.read_csv(fn)
 

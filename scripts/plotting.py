@@ -12,6 +12,7 @@ import constant as c
 from parsing import FileParser
 from utils import *
 from collections import defaultdict
+import pandas as pd
 
 plt.style.use('plot_style.txt')
 
@@ -420,8 +421,16 @@ class FigurePlotter:
             except:
                 logging.error(f'{fs}: Incomplete Data!')
                 continue
-            variation_data[v] = tp
+            if eval(v) == 100 or eval(v) == 500:
+                # if eval(v) == 50 or eval(v) == 450:
+                variation_data[v] = tp
+            # print(v)
+            # if eval(v) == 100:
+            #     variation_data[v] = tp
+            # elif eval(v) == 101:
+            #     variation_data['5000'] = tp
 
+        fc = 2
         cc, rc = get_row_col_counts(fc)
         fig, axs = plt.subplots(rc, cc, constrained_layout=False)
 
@@ -437,13 +446,29 @@ class FigurePlotter:
             else:
                 ax = axs[r_loc, c_loc]
 
-            nodes = ['Node 0', 'Node 1', 'Node 98', 'Node 99']
-
+            if eval(v) == 100:
+                nodes = ['Node 0', 'Node 1', 'Node 98', 'Node 99']
+            else:
+                nodes = ['Node 0', 'Node 1', 'Node 498', 'Node 499']
             # Only put the legend on the first figures
             if i == 0:
                 ax.legend(ncol=4)
             ax.set(
-                xlabel='Node ID', ylabel='Tip Pool Size')
+                xlabel=f'Node ID (Node Count = {int(v)})', ylabel='Tip Pool Size')
+            # ax.set(
+            #     xlabel=f'Node ID (Constant Network Delay = {int(v)} (ms))', ylabel='Tip Pool Size')
+            # ax.set(
+            #     xlabel=f'Node ID (Uniform Random Delay = {int(v)}–{int(v)+100} (ms))', ylabel='Tip Pool Size')
+
+            # if int(v) == 450:
+            #     ax.set(
+            #         xlabel=f'Node ID (Uniform Random Delay = 450–550 (ms))', ylabel='Tip Pool Size')
+            # else:
+            #     ax.set(
+            #         xlabel=f'Node ID (Uniform Random Delay = 50–950 (ms))', ylabel='Tip Pool Size')
+            # ax.set(
+            #     xlabel=f'Node ID (BPS = {int(v)})', ylabel='Tip Pool Size')
+
             ax.set_xticklabels(nodes)
             # ax.set_title(
             #     f'Uniform Random Delay = {int(v)}–{int(v)+100} (ms)', fontsize=12)
@@ -464,10 +489,15 @@ class FigurePlotter:
             #     ax.set_ylim((0, 3000))
             # ax.set_title(
             #     f'Constant Network Delay = {int(v)} (ms)', fontsize=12)
-            ax.set_title(
-                f'Node Count = {int(v)}', fontsize=12)
+            # ax.set_title(
+            #     f'Node Count = {int(v)}', fontsize=20)
+            # if int(v) == 100:
+            #     ax.set_ylim((0, 30))
+            # else:
+            #     ax.set_ylim((0, 1000))
             ax.set_ylim((0, 60))
-            ax.set_yticks(range(0, 61, 30))
+            ax.set_yticks((0, 60, 30))
+            # ax.set_yticks(range(0, 81, 40))
             # ax.set_xlim((20, 60))
 
             y_data = (tips[nodes[0]].values,
@@ -553,7 +583,7 @@ class FigurePlotter:
                     i + 0.25,
                     mean,
                     r"$\hat{\mu}_{\rm{mean}} = $" + str(round(mean, 2)),
-                    fontsize=10,
+                    fontsize=18,
                     va="center",
                     bbox=dict(
                         facecolor="white",
@@ -589,9 +619,12 @@ class FigurePlotter:
 
         data = []
         variations = []
-
+        # 100 80 120 60 140 40 160 20 180 0 200
         # thorughput = [100, 4000]
+        # df = pd.DataFrame()
         for i, (v, d) in enumerate(sorted(variation_data.items(), key=lambda item: eval(item[0]))):
+            # if float(v) > 0.75:
+            #     continue
             z = (d[0]*1e-9).tolist()
             if len(z) == 0:
                 continue
@@ -611,24 +644,66 @@ class FigurePlotter:
             #     ax.set_title(
             #         f'Uniform Random Delay = 50–950 (ms)', fontsize=12)
             # variations.append(f'{v}, {thorughput[i]}')
-            variations.append(float(v)*100)
+            # variations.append(float(v)*100)
+            variations.append(float(v))
+            # var = 100 - int(v)
+            # variations.append(f'{100-var}-{100+var}')
             # print(z, v)
             # variations.append(int(eval(v)[0]))
+            # k = '100'
+            # if var != 0:
+            #     k = f'{100-var}-{100+var}'
+            # print(k)
+            # print(len(z))
 
+            # df[k] = z + [None] * (5906 - len(z))
+            # print(df)
+            # print('\n')
         # print(data)
-        plt.violinplot(data)
+        # df.to_csv('ct_delay variations.csv')
+
+        fig, ax1 = plt.subplots()
+
+        ax2 = ax1.twinx()
+        # ax1.plot(x, y1, 'g-')
+        # ax2.plot(x, y2, 'b-')
+
+        # ax1.set_xlabel('X data')
+        # ax1.set_ylabel('Y1 data', color='g')
+        # ax2.set_ylabel('Y2 data', color='b')
+
+        n100 = [10, 22, 27, 34, 42, 54, 65]
+        n500 = [10, 77, 98, 131, 172, 226, 294]
+        ax1.violinplot(data)
+        ax2.plot(list(range(1, 1 + len(variations))),
+                 n100, 'o-', color='red')
+
+        # fig = plt.figure()
+
+        # axes1 = fig.add_subplot(111)
+        # # set props for left y-axis here
+
+        # axes2 = axes1.twinx()   # mirror them
+
+        # axes2.plot(z)
+
         # plt.xlabel('Adversary Weight (%)')
-        plt.xlabel('Payload Loss (%)')
+        # plt.xlabel('Payload Loss (%)')
+        ax1.set_xlabel('Confirmation Threshold')
         # plt.xlabel('Uniform Random Network Delay (ms)')
         # plt.xlabel('Node Count, TPS')
         # plt.ylim(0, 6)
         # plt.xlabel('Zipf Parameter')
-        plt.xticks(ticks=list(range(1, 1 + len(variations))),
-                   labels=variations)
-
-        axes = plt.axes()
-        axes.set_ylim([0, 60])
-        plt.ylabel('Confirmation Time (s)')
+        # ax1.xticks(ticks=list(range(1, 1 + len(variations))),
+        #            labels=variations)
+        ax2.set_xticks(list(range(1, 1 + len(variations))))
+        ax2.set_xticklabels([0, 0.5, 0.66, 0.7, 0.75, 0.8, 0.85, 0.9, 1])
+        ax1.set_ylabel('Confirmation Time (s)')
+        ax2.set_ylabel('Minimum Nodes to Confirm')
+        ax2.set_ylim(0)
+        # axes = plt.axes()
+        # axes.set_ylim([0, 20])
+        # plt.ylabel('Confirmation Time (s)')
         plt.savefig(f'{self.figure_output_path}/{ofn}',
                     transparent=self.transparent, dpi=300)
         plt.close()
@@ -657,6 +732,8 @@ class FigurePlotter:
         data = []
 
         for i, (v, d) in enumerate(sorted(variation_data.items())):
+            if float(v) > 75:
+                continue
             variations.append(v)
             data.append(d)
         plt.violinplot(data)
@@ -666,7 +743,7 @@ class FigurePlotter:
         plt.xticks(ticks=list(range(1, 1 + len(variations))),
                    labels=variations)
 
-        plt.ylabel('Number of Requested Messages')
+        plt.ylabel('Number of Requested Blocks')
         plt.savefig(f'{self.figure_output_path}/{ofn}',
                     transparent=self.transparent, dpi=300)
         plt.close()
@@ -694,7 +771,7 @@ class FigurePlotter:
 
         # thorughput = [100, 4000]
         for i, (v, d) in enumerate(sorted(variation_data.items(), key=lambda item: eval(item[0]))):
-            if float(v)*100 <= 80:
+            if float(v)*100 < 80:
                 data.append(d)
                 variations.append(float(v)*100)
 
@@ -707,7 +784,7 @@ class FigurePlotter:
         plt.xticks(ticks=list(range(1, 1 + len(variations))),
                    labels=variations)
 
-        plt.ylabel('Number of Requested Messages')
+        plt.ylabel('Number of Requested Blocks')
         plt.savefig(f'{self.figure_output_path}/{ofn}',
                     transparent=self.transparent, dpi=300)
         plt.close()

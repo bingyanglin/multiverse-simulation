@@ -171,9 +171,12 @@ if __name__ == '__main__':
                     # os.system(
                     #     f'{exec} --simulationTarget={target} --minDelay={500-int(v)} --maxDelay={500+int(v)} -decelerationFactor={df[i]}')
             elif var == 'AW':
-                for i, v in enumerate([(0.66, True), (0.75, True), (0.5, False), (0.5, True)]):
+                # for i, v in enumerate([(0.66, True), (0.75, True), (0.5, False), (0.5, True)]):
+                #     os.system(
+                #         f'{exec} --simulationTarget={target} --weightThreshold={v[0]} --weightThresholdAbsolute={v[1]} -decelerationFactor={df[i]}')
+                for i, v in enumerate(vv):
                     os.system(
-                        f'{exec} --simulationTarget={target} --weightThreshold={v[0]} --weightThresholdAbsolute={v[1]} -decelerationFactor={df[i]}')
+                        f'{exec} --simulationTarget={target} --weightThreshold={float(v)} -decelerationFactor={df[i]}')
             elif var == 'IM':
                 for i, v in enumerate(vv):
                     os.system(
@@ -224,10 +227,10 @@ if __name__ == '__main__':
             if repetition != 1:
                 folder = base_folder + f'/iter_{iter}'
                 iter_suffix = f'_iter_{iter}'
-            if target == 'CT':
-                if repetition != 1 and iter == 0:
-                    plotter.number_of_requested_missing_messages_batch(
-                        n, base_folder + '/*/mm*csv', f'CT_{n}_mm.pdf', t_confirmation, n)
+            # if target == 'CT':
+            #     if repetition != 1 and iter == 0:
+            #         plotter.number_of_requested_missing_messages_batch(
+            #             n, base_folder + '/*/mm*csv', f'CT_{n}_mm.pdf', t_confirmation, n)
             # if target == 'DS':
             #     if repetition != 1 and iter == 0:
             #         # The distribution plots of multiple iterations are ran only one time.
