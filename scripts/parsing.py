@@ -48,9 +48,9 @@ class FileParser:
         # Opening JSON file
         with open(config_fn) as f:
             c = json.load(f)
-
+        if variation == "WattsStrogatzRandomness":
+            variation = "RandomnessWS"
         v = str(c[variation])
-
         data = pd.read_csv(fn)
 
         # # Chop data before the begining time

@@ -154,7 +154,7 @@ if __name__ == '__main__':
                 vn = c.SIMULATION_VAR_DICT[var]
                 # TPS = [100, 4000]
                 for i, v in enumerate(vv):
-                    if vn == 'zipfParameter' or vn == 'payloadLoss':
+                    if vn == 'zipfParameter' or vn == 'payloadLoss' or vn == 'WattsStrogatzRandomness':
                         v = float(v)
                     else:
                         v = int(v)

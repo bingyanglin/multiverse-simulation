@@ -30,6 +30,7 @@ DS_STY_LIST = ['-', '-', '--', '--', "-.", "-."]
 SIMULATION_VAR_DICT = {'N': 'nodesCount',
                        'S': 'zipfParameter',
                        'K': 'tipsCount',
+                       'W': 'WattsStrogatzRandomness',
                        'P': 'payloadLoss'}
 
 # The figure naming mapping
@@ -81,4 +82,8 @@ FIGURE_NAMING_DICT = {'N': ("NodesCount", "Confirmation Time v.s. Different Node
                              "Convergence Time v.s. Different Adversary Speed",
                              "Flips v.s. Different Adversary Speed",
                              "Unconfirming Counts v.s. Different Adversary Speed",
-                             "Confirmation Weight Depth v.s. Different Adversary Speed")}
+                             "Confirmation Weight Depth v.s. Different Adversary Speed"),
+                      'W': ("WattsStrogatzRandomness", "Confirmation Time v.s. Different Rewiring Possibility",
+                            "Convergence Time v.s. Different Rewiring Possibility", "Flips v.s. Different Rewiring Possibility",
+                            "Unconfirming Counts v.s. Different Rewiring Possibility",
+                            "Confirmation Weight Depth v.s. Different Rewiring Possibility")}
