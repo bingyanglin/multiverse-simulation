@@ -231,12 +231,26 @@ func WattsStrogatz(meanDegree int, randomness float64) PeeringStrategy {
 		nodeCount := len(network.Peers)
 		graph := make(map[int]map[int]bool)
 
-		for nodeID := 0; nodeID < nodeCount; nodeID++ {
+		// nodeIDList := rand.Perm(nodeCount)
+		nodeIDList := crypto.Randomness.Perm(nodeCount)
+		// for nodeID := 0; nodeID < nodeCount; nodeID++ {
+		for _, nodeID := range nodeIDList {
 			graph[nodeID] = make(map[int]bool)
-
-			for j := nodeID + 1; j <= nodeID+meanDegree/2; j++ {
-				graph[nodeID][j%nodeCount] = true
+			neighbors := make(map[int]bool) // New empty set
+			for (len(neighbors)) < meanDegree/2 {
+				neighbor := crypto.Randomness.Intn(nodeCount)
+				if neighbor != nodeID {
+					neighbors[neighbor] = true
+				}
 			}
+			for neighbor := range neighbors {
+				graph[nodeID][neighbor] = true
+				// log.Info("Node ID ", nodeID, " Neighbor ", neighbor)
+			}
+
+			// for j := nodeID + 1; j <= nodeID+meanDegree/2; j++ {
+			// 	graph[nodeID][j%nodeCount] = true
+			// }
 		}
 
 		for tail, edges := range graph {

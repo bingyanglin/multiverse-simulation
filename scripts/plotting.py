@@ -611,8 +611,8 @@ class FigurePlotter:
             #     ax.set_title(
             #         f'Uniform Random Delay = 50–950 (ms)', fontsize=12)
             # variations.append(f'{v}, {thorughput[i]}')
-            variations.append(float(v)*100)
-            # variations.append(int(float(v)*100))
+            # variations.append(float(v)*100)
+            variations.append(int(float(v)*100))
             # print(z, v)
             # variations.append(int(eval(v)[0]))
 
