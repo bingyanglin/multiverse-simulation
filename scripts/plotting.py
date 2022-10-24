@@ -674,9 +674,11 @@ class FigurePlotter:
 
         n100 = [10, 22, 27, 34, 42, 54, 65]
         n500 = [10, 77, 98, 131, 172, 226, 294]
+        n100s0 = [51, 67, 71, 76, 81, 86, 91]
+        n100s2 = [1, 2, 2, 2, 3, 4, 5]
         ax1.violinplot(data)
         ax2.plot(list(range(1, 1 + len(variations))),
-                 n100, 'o-', color='red')
+                 n100s2, 'o-', color='red')
 
         # fig = plt.figure()
 
@@ -697,10 +699,11 @@ class FigurePlotter:
         # ax1.xticks(ticks=list(range(1, 1 + len(variations))),
         #            labels=variations)
         ax2.set_xticks(list(range(1, 1 + len(variations))))
-        ax2.set_xticklabels([0, 0.5, 0.66, 0.7, 0.75, 0.8, 0.85, 0.9, 1])
+        ax2.set_xticklabels([0.5, 0.66, 0.7, 0.75, 0.8, 0.85, 0.9])
         ax1.set_ylabel('Confirmation Time (s)')
         ax2.set_ylabel('Minimum Nodes to Confirm')
-        ax2.set_ylim(0)
+        ax1.set_ylim([0, 2])
+        # ax2.set_ylim([40, 100])
         # axes = plt.axes()
         # axes.set_ylim([0, 20])
         # plt.ylabel('Confirmation Time (s)')
