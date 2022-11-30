@@ -220,22 +220,22 @@ if __name__ == '__main__':
                 iter_suffix = f'_iter_{iter}'
 
             if target == 'DS':
-                if repetition != 1 and iter == 0:
-                    # The distribution plots of multiple iterations are ran only one time.
-                    plotter.convergence_time_distribution_plot(
-                        n, base_folder, f'DS_{n}_cv.pdf', len(vv), repetition, title=t_convergence)
+                # if repetition != 1 and iter == 0:
+                #     # The distribution plots of multiple iterations are ran only one time.
+                #     plotter.convergence_time_distribution_plot(
+                #         n, base_folder, f'DS_{n}_cv.pdf', len(vv), repetition, title=t_convergence)
 
-        #             # plotter.flips_distribution_plot(
-        #             #     n, base_folder, f'DS_{n}_fl.png', len(vv), repetition, title=t_flips)
+                #             # plotter.flips_distribution_plot(
+                #             #     n, base_folder, f'DS_{n}_fl.png', len(vv), repetition, title=t_flips)
 
-        #             # plotter.unconfirmed_count_distribution_plot(
-        #             #     n, base_folder, f'DS_{n}_uc.png', len(vv), repetition, title=t_unconfirming)
+                #             # plotter.unconfirmed_count_distribution_plot(
+                #             #     n, base_folder, f'DS_{n}_uc.png', len(vv), repetition, title=t_unconfirming)
 
-        #             # plotter.confirmation_depth_distribution_plot(
-        #             #     n, base_folder, f'DP_{n}_cd.png', len(vv), repetition, title=t_depth)
+                #             # plotter.confirmation_depth_distribution_plot(
+                #             #     n, base_folder, f'DP_{n}_cd.png', len(vv), repetition, title=t_depth)
 
-        #         # plotter.confirmed_like_color_plot(
-        #         #     n, folder + '/cc*csv', f'DS_{n}_cc{iter_suffix}.png', len(vv))
+                plotter.confirmed_like_color_plot(
+                    n, folder + '/cc*csv', f'DS_{n}_cc{iter_suffix}.png', len(vv))
 
             # plotter.confirmation_time_violinplot(
             #     n, folder + '/aw*csv', f'CT_{n}_ct{iter_suffix}.pdf', t_confirmation, c.VAR_DICT[n])

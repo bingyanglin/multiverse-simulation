@@ -291,8 +291,12 @@ class FigurePlotter:
         # Init the matplotlib config
         font = {'family': 'Times New Roman',
                 'weight': 'bold',
-                'size': 8}
+                'size': 14}
         matplotlib.rc('font', **font)
+
+        # plt.figure(figsize=(12, 5), dpi=500, constrained_layout=True)
+        plt.close('all')
+        plt.figure()
 
         variation_data = {}
         for f in glob.glob(fs):
@@ -303,35 +307,40 @@ class FigurePlotter:
             except:
                 logging.error(f'{fs}: Incomplete Data!')
                 continue
-
-            variation_data[v] = cc_ct_flips_total_aw_x
-
+            print(v)
+            if eval(v)[0] == 25:
+                variation_data[v] = cc_ct_flips_total_aw_x
+        fc = 1
         rc, cc = get_row_col_counts(fc)
-        fig, axs = plt.subplots(rc, cc, figsize=(
-            12, 5), dpi=500, constrained_layout=True)
+        # fig, axs = plt.subplots(rc, cc, figsize=(
+        #     12, 5), dpi=500, constrained_layout=True)
 
         for i, (v, d) in enumerate(sorted(variation_data.items(), key=lambda item: eval(item[0]))):
             (weights, ct, *_, total_aw, x_axis) = d
             r_loc = i // cc
             c_loc = i % cc
 
-            if fc == 1:
-                ax = axs
-            elif rc == 1:
-                ax = axs[c_loc]
-            else:
-                ax = axs[r_loc, c_loc]
+            # if fc == 1:
+            #     ax = axs
+            # elif rc == 1:
+            #     ax = axs[c_loc]
+            # else:
+            #     ax = axs[r_loc, c_loc]
             for j, n in enumerate(weights.columns):
                 aw_percentage = 100.0 * weights[n] / total_aw
-                ax.plot(x_axis, aw_percentage, label=n,
-                        color=self.ds_clr_list[j], ls=self.ds_sty_list[j], linewidth=1)
+                plt.plot(x_axis, aw_percentage, label=n.replace(' Accumulated Weight', ''),
+                         color=self.ds_clr_list[j], ls=self.ds_sty_list[j], linewidth=1)
 
             # Only put the legend on the first figures
             if i == 0:
-                ax.legend()
-            ax.yaxis.set_major_formatter(mtick.PercentFormatter())
-            ax.set(xlabel='Time (s)', ylabel='Accumulated Weight Percentage',
-                   title=f'{self.var_dict[var]} = {v}, {ct:.1f}(s)')
+                plt.legend()
+            # plt.yaxis.set_major_formatter(mtick.PercentFormatter())
+            # ax.set(xlabel='Time (s)', ylabel='Accumulated Weight Percentage',
+            #        title=f'{self.var_dict[var]} = {v}, {ct:.1f}(s)')
+            # plt.set(xlabel='Time (s)', ylabel='Accumulated Weight Percentage')
+            plt.xlabel('Time (s)')
+            plt.ylabel('Approval Weight (%)')
+            plt.ylim([0, 100])
 
         plt.savefig(f'{self.figure_output_path}/{ofn}',
                     transparent=self.transparent)
