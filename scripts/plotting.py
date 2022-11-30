@@ -308,8 +308,8 @@ class FigurePlotter:
                 logging.error(f'{fs}: Incomplete Data!')
                 continue
             print(v)
-            if eval(v)[0] == 25:
-                variation_data[v] = cc_ct_flips_total_aw_x
+            # if eval(v)[0] == 25:
+            variation_data[v] = cc_ct_flips_total_aw_x
         fc = 1
         rc, cc = get_row_col_counts(fc)
         # fig, axs = plt.subplots(rc, cc, figsize=(

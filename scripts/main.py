@@ -235,7 +235,7 @@ if __name__ == '__main__':
                 #             #     n, base_folder, f'DP_{n}_cd.png', len(vv), repetition, title=t_depth)
 
                 plotter.confirmed_like_color_plot(
-                    n, folder + '/cc*csv', f'DS_{n}_cc{iter_suffix}.png', len(vv))
+                    n, folder + '/cc*csv', f'DS_{n}_cc{iter_suffix}.pdf', len(vv))
 
             # plotter.confirmation_time_violinplot(
             #     n, folder + '/aw*csv', f'CT_{n}_ct{iter_suffix}.pdf', t_confirmation, c.VAR_DICT[n])
