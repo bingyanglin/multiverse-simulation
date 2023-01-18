@@ -97,7 +97,7 @@ class FigurePlotter:
             # variations.append(eval(v))
 
         plt.violinplot(data)
-        plt.xlabel('Confirmation Threshold')
+        plt.xlabel('Adversary Weight (%)')
         # plt.title(title)
         plt.xticks(ticks=list(range(1, 1 + len(variations))),
                    labels=variations)
